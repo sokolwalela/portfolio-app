@@ -1,26 +1,87 @@
 @import "tailwindcss";
 
+/* ===== 기본 토큰 (다크 배경 대비 가독성) ===== */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #0c0c0c;
+  --foreground: #fafafa;
+  --muted: #a1a1aa;
+  --muted-bg: #18181b;
+  --accent: #e4e4e7;
+  --border: #27272a;
+  --card: #18181b;
+  --radius: 0.5rem;
+  --font-sans: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-mono: ui-monospace, "Cascadia Code", "Source Code Pro", Menlo, Consolas, monospace;
+
+  /* 타입 스케일: 모바일에서 가독성 확보 (최소 14px~16px 본문) */
+  --type-scale-1: clamp(1.75rem, 4vw + 1rem, 3.5rem);
+  --type-scale-2: clamp(1.375rem, 2.5vw + 0.75rem, 2rem);
+  --type-scale-3: clamp(1.125rem, 1.5vw + 0.75rem, 1.25rem);
+  --type-scale-4: clamp(0.9375rem, 0.5vw + 0.85rem, 1rem);
+  --type-scale-5: clamp(0.8125rem, 0.25vw + 0.75rem, 0.875rem);
+
+  /* 행간: 모바일에서 약간 넓게 */
+  --leading-tight: 1.25;
+  --leading-normal: 1.5;
+  --leading-relaxed: 1.625;
+  --leading-loose: 1.75;
+
+  /* 터치 영역 최소 크기 */
+  --touch-min: 44px;
+
+  /* safe-area (노치·홈 인디케이터) */
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-right: env(safe-area-inset-right, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+  --safe-left: env(safe-area-inset-left, 0px);
+}
+
+/* 모바일: 배경 대비 폰트 색상 강화 (가독성·야외/밝은 환경) */
+@media (max-width: 767px) {
+  :root {
+    --foreground: #f4f4f5;
+    --muted: #b4b4bc;
+    --accent: #e4e4e7;
+  }
+}
+
+/* 작은 모바일: 본문 최소 16px 권장 (가독성) */
+@media (max-width: 480px) {
+  :root {
+    --type-scale-4: 1rem;
+    --type-scale-5: 0.9375rem;
+  }
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans), system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  line-height: var(--leading-normal);
+  padding-left: var(--safe-left);
+  padding-right: var(--safe-right);
+  padding-bottom: var(--safe-bottom);
+}
+
+/* Section reveal animation base */
+.section-reveal {
+  opacity: 0;
+  transform: translateY(1.25rem);
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.section-reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
 }
