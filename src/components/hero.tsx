@@ -6,6 +6,8 @@ const CATCHPHRASE = "안녕하세요.\n제가 만드는 경험을\n소개합니�
 
 export function Hero() {
   const [visible, setVisible] = useState(false);
+  const [greetingLine, ...restLines] = CATCHPHRASE.split("\n");
+  const restText = restLines.length ? `\n${restLines.join("\n")}` : "";
 
   useEffect(() => {
     const t = setTimeout(() => setVisible(true), 100);
@@ -27,7 +29,8 @@ export function Hero() {
             transform: visible ? "translateY(0)" : "translateY(0.5rem)",
           }}
         >
-          {CATCHPHRASE}
+          <span className="text-green-600">{greetingLine}</span>
+          {restText}
         </p>
         <p
           className="mt-6 leading-relaxed text-[var(--muted)] transition-all duration-700 delay-300 ease-out"
